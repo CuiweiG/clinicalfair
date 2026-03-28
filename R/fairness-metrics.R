@@ -6,7 +6,7 @@
 #' @param data A [fairness_data] object.
 #' @param metrics Character vector of metrics to compute. Default
 #'   computes all available metrics. Options: `"selection_rate"`,
-#'   `"tpr"`, `"fpr"`, `"ppv"`, `"npv"`, `"accuracy"`,
+#'   `"tpr"`, `"fpr"`, `"ppv"`, `"accuracy"`,
 #'   `"auc"`, `"brier"`.
 #'
 #' @return A `fairness_metrics` object (tibble) with columns:

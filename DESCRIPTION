@@ -11,7 +11,8 @@ Description: Post-hoc fairness auditing toolkit for clinical prediction
     parity, calibration disparity), visualizing disparities across
     protected attributes, and performing threshold-based mitigation.
     Supports intersectional analysis across multiple attributes and
-    generates audit reports aligned with FDA AI/ML regulatory guidance.
+    generates audit reports useful for fairness-oriented auditing
+    in clinical AI settings.
     Methods described in Obermeyer et al. (2019)
     <doi:10.1126/science.aax2342> and Hardt, Price, and Srebro (2016)
     <doi:10.48550/arXiv.1610.02413>.

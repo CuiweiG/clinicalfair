@@ -115,11 +115,24 @@ threshold_optimize <- function(data,
     new_class[idx] <- as.integer(data$predictions[idx] >= best_thresholds[grp])
   }
 
+  acc_after <- mean(new_class == data$labels)
+
+  # Enforce min_accuracy constraint
+  if (acc_after < min_accuracy) {
+    cli::cli_warn(paste0(
+      "Mitigated accuracy ({round(acc_after, 3)}) is below ",
+      "min_accuracy ({min_accuracy}). Reverting to original ",
+      "thresholds."))
+    best_thresholds <- stats::setNames(
+      rep(data$threshold, length(data$groups)), data$groups)
+    new_class <- data$predicted_class
+    acc_after <- acc_before
+  }
+
   # Build "after" fairness_data with new thresholds
   data_after <- data
   data_after$predicted_class <- new_class
   after <- fairness_metrics(data_after)
-  acc_after <- mean(new_class == data$labels)
 
   out <- list(
     thresholds      = best_thresholds,

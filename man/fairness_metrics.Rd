@@ -14,7 +14,7 @@ fairness_metrics(
 
 \item{metrics}{Character vector of metrics to compute. Default
 computes all available metrics. Options: \code{"selection_rate"},
-\code{"tpr"}, \code{"fpr"}, \code{"ppv"}, \code{"npv"}, \code{"accuracy"},
+\code{"tpr"}, \code{"fpr"}, \code{"ppv"}, \code{"accuracy"},
 \code{"auc"}, \code{"brier"}.}
 }
 \value{
