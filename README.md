@@ -1,8 +1,8 @@
-# clinicalfair
+ï»¿# clinicalfair
 
 <!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![R â‰?4.1.0](https://img.shields.io/badge/R-%E2%89%A5%204.1.0-brightgreen.svg)](https://cran.r-project.org/)
+[![R ï¿½?4.1.0](https://img.shields.io/badge/R-%E2%89%A5%204.1.0-brightgreen.svg)](https://cran.r-project.org/)
 <!-- badges: end -->
 
 Algorithmic fairness assessment for clinical prediction models.
@@ -33,7 +33,7 @@ threshold_optimize(fd, objective = "equalized_odds")
 ## Features
 
 **Metrics**: demographic parity, equalized odds, predictive parity,
-calibration, AUC, Brier score â€?with ratio and difference vs reference.
+calibration, AUC, Brier score ï¿½?with ratio and difference vs reference.
 
 **Visualization**: `autoplot()` disparity plots, `plot_roc()` by group,
 `plot_calibration()` by group.
@@ -50,7 +50,7 @@ detection and actionable recommendations.
 ## References
 
 - Obermeyer et al. (2019) *Science* doi:10.1126/science.aax2342
-- Hardt et al. (2016) *NeurIPS* â€?Equality of Opportunity
+- Hardt et al. (2016) *NeurIPS* ï¿½?Equality of Opportunity
 - FDA AI/ML Action Plan (2024)
 
 ## License
