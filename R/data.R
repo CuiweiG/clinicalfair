@@ -21,3 +21,4 @@
 #'                     compas_sim$race)
 #' fairness_metrics(fd)
 "compas_sim"
+

@@ -1,3 +1,4 @@
 library(testthat)
-library(fairml)
-test_check("fairml")
+library(clinicalfair)
+test_check("clinicalfair")
+

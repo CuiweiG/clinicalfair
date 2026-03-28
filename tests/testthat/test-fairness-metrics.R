@@ -28,7 +28,7 @@ test_that("AUC computed correctly", {
 })
 
 test_that("COMPAS dataset shows disparity", {
-  data(compas_sim, package = "fairml")
+  data(compas_sim, package = "clinicalfair")
   fd <- fairness_data(compas_sim$risk_score, compas_sim$recidivism,
                       compas_sim$race)
   fm <- fairness_metrics(fd, metrics = "selection_rate")
@@ -37,3 +37,4 @@ test_that("COMPAS dataset shows disparity", {
   sr_white <- fm$value[fm$group == "White"]
   expect_gt(sr_black, sr_white)
 })
+

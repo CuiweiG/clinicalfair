@@ -29,7 +29,7 @@ fairness metrics from a \code{fairness_data} object.
 \details{
 Fairness is assessed by comparing metric values across groups.
 A ratio of 1.0 or difference of 0.0 indicates perfect parity.
-Common thresholds: ratio in \link{0.8, 1.25} (four-fifths rule,
+Common thresholds: ratio in \eqn{[0.8, 1.25]} (four-fifths rule,
 EEOC guidelines) or difference < 0.05.
 }
 \examples{

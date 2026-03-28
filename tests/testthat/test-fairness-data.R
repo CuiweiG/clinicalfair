@@ -25,3 +25,4 @@ test_that("print works", {
                       rep(c("X", "Y"), 25))
   expect_no_error(print(fd))
 })
+

@@ -1,4 +1,4 @@
-#' @title fairml: Algorithmic Fairness for Clinical Prediction Models
+#' @title clinicalfair: Algorithmic Fairness for Clinical Prediction Models
 #'
 #' @description
 #' Evaluates algorithmic fairness of clinical prediction models across
@@ -14,3 +14,4 @@
 #' @return See the specific method documentation.
 #' @export
 ggplot2::autoplot
+

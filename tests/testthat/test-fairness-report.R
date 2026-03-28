@@ -1,5 +1,5 @@
 test_that("fairness_report detects violations", {
-  data(compas_sim, package = "fairml")
+  data(compas_sim, package = "clinicalfair")
   fd <- fairness_data(compas_sim$risk_score, compas_sim$recidivism,
                       compas_sim$race)
   rpt <- fairness_report(fd)
@@ -17,3 +17,4 @@ test_that("fairness_report with no violations", {
   rpt <- fairness_report(fd)
   expect_s3_class(rpt, "fairness_report")
 })
+

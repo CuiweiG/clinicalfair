@@ -1,0 +1,84 @@
+---
+title: "Algorithmic fairness assessment with clinicalfair"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Algorithmic fairness assessment with clinicalfair}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 4)
+```
+
+## Overview
+
+clinicalfair evaluates algorithmic fairness of clinical prediction models
+across demographic subgroups. It implements the metrics and methods
+recommended by the FDA AI/ML guidance framework.
+
+## Example: COMPAS recidivism prediction
+
+```{r setup}
+library(clinicalfair)
+data(compas_sim)
+str(compas_sim)
+```
+
+## Create fairness data
+
+```{r fairness-data}
+fd <- fairness_data(
+  predictions    = compas_sim$risk_score,
+  labels         = compas_sim$recidivism,
+  protected_attr = compas_sim$race
+)
+fd
+```
+
+## Compute fairness metrics
+
+```{r metrics}
+fm <- fairness_metrics(fd)
+fm
+```
+
+## Generate fairness report
+
+```{r report}
+rpt <- fairness_report(fd)
+rpt
+```
+
+## Visualize disparities
+
+```{r disparity-plot}
+autoplot(fm)
+```
+
+## Group-wise calibration
+
+```{r calibration}
+plot_calibration(fd)
+```
+
+## Threshold optimization
+
+```{r mitigation}
+mit <- threshold_optimize(fd, objective = "equalized_odds")
+mit
+```
+
+## Intersectional analysis
+
+```{r intersectional}
+set.seed(42)
+n <- nrow(compas_sim)
+intersectional_fairness(
+  predictions = compas_sim$risk_score,
+  labels      = compas_sim$recidivism,
+  race        = compas_sim$race,
+  age_group   = sample(c("Young", "Old"), n, replace = TRUE)
+)
+```
+
