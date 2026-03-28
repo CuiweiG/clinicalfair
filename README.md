@@ -44,6 +44,28 @@ for transparency in clinical AI.
 
 ---
 
+## Why clinicalfair?
+
+Existing R packages approach fairness from different angles:
+
+| Package | Focus | clinicalfair difference |
+|---------|-------|------------------------|
+| `fairmodels` | Model-level fairness (wraps mlr3) | clinicalfair is model-agnostic: works with any predicted probabilities |
+| `fairness` | Metric computation | clinicalfair adds threshold mitigation + intersectional analysis |
+| `fairmetrics` | CIs for fairness metrics | clinicalfair provides audit reports with four-fifths rule screening |
+
+`clinicalfair` is designed for the **clinical audit use case**:
+a clinician or regulator receives a trained model and needs to
+answer "is this model fair across patient subgroups?" in one
+function call, with actionable output.
+
+```r
+# One-line audit
+fairness_report(fairness_data(predictions, labels, race))
+```
+
+---
+
 ## Installation
 
 ```r
