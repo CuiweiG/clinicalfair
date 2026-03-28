@@ -4,14 +4,17 @@ Version: 0.1.0
 Authors@R:
     person("Cuiwei", "Gao", , "48gaocuiwei@gmail.com",
     role = c("aut", "cre", "cph"))
-Description: Evaluates algorithmic fairness of clinical prediction models
-    across demographic subgroups. Computes standard fairness metrics
-    (demographic parity, equalized odds, calibration parity), generates
-    disparity plots, and provides threshold-based mitigation strategies.
-    Designed for regulatory compliance with FDA AI/ML guidance and
-    health equity assessment. Methods described in Obermeyer et al.
-    (2019) <doi:10.1126/science.aax2342> and Rajkomar et al. (2018)
-    <doi:10.1056/NEJMms1810169>.
+Description: Post-hoc fairness auditing toolkit for clinical prediction
+    models. Unlike in-processing approaches that modify model training,
+    this package evaluates existing models by computing group-wise
+    fairness metrics (demographic parity, equalized odds, predictive
+    parity, calibration disparity), visualizing disparities across
+    protected attributes, and performing threshold-based mitigation.
+    Supports intersectional analysis across multiple attributes and
+    generates audit reports aligned with FDA AI/ML regulatory guidance.
+    Methods described in Obermeyer et al. (2019)
+    <doi:10.1126/science.aax2342> and Hardt, Price, and Srebro (2016)
+    <doi:10.48550/arXiv.1610.02413>.
 License: MIT + file LICENSE
 URL: https://github.com/CuiweiG/clinicalfair
 BugReports: https://github.com/CuiweiG/clinicalfair/issues
@@ -23,8 +26,7 @@ Imports:
     ggplot2 (>= 3.4.0),
     rlang (>= 1.1.0),
     stats,
-    tibble (>= 3.1.0),
-    tidyr (>= 1.3.0)
+    tibble (>= 3.1.0)
 Suggests:
     knitr,
     rmarkdown,
