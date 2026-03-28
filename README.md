@@ -92,6 +92,21 @@ threshold_optimize(fd, objective = "equalized_odds")
 
 ---
 
+## Functions
+
+| Function | Description |
+|----------|-------------|
+| `fairness_data()` | Bundle predictions, labels, protected attributes |
+| `fairness_metrics()` | Compute group-wise fairness metrics |
+| `fairness_report()` | Generate audit report with four-fifths rule screening |
+| `threshold_optimize()` | Group-specific threshold mitigation |
+| `intersectional_fairness()` | Cross-tabulated multi-attribute analysis |
+| `autoplot()` | Disparity bar plots (S3 method) |
+| `plot_roc()` | ROC curves by protected group |
+| `plot_calibration()` | Calibration curves by group |
+
+---
+
 ## Key references
 
 - Obermeyer Z et al. (2019). Dissecting racial bias in an
