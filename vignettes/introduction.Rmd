@@ -14,8 +14,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height
 ## Overview
 
 clinicalfair evaluates algorithmic fairness of clinical prediction models
-across demographic subgroups. It implements the metrics and methods
-recommended by the FDA AI/ML guidance framework.
+across demographic subgroups. It is motivated by regulatory expectations for transparency in clinical AI evaluation.
 
 ## Example: COMPAS recidivism prediction
 
