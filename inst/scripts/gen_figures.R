@@ -1,4 +1,3 @@
-.libPaths("C:/Users/win10/R/win-library/4.4")
 devtools::load_all(".", quiet = TRUE)
 library(ggplot2)
 library(patchwork)
@@ -15,7 +14,7 @@ od <- "man/figures"
 pal <- c("#0072B2", "#D55E00", "#009E73", "#E69F00", "#CC79A7")
 
 ## ============================================================
-## Fig 1: Disparity metrics — before vs after mitigation
+## Fig 1: Disparity metrics -- before vs after mitigation
 ## ============================================================
 key_metrics <- c("selection_rate", "tpr", "fpr")
 

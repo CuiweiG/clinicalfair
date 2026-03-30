@@ -16,7 +16,7 @@
 `clinicalfair` is a post-hoc fairness auditing toolkit for clinical
 prediction models. It evaluates existing models by computing
 group-wise fairness metrics, visualizing disparities, and performing
-threshold-based mitigation — motivated by regulatory expectations
+threshold-based mitigation -- motivated by regulatory expectations
 for transparency in clinical AI.
 
 - **Metrics**: demographic parity, equalized odds, predictive
@@ -135,8 +135,8 @@ threshold_optimize(fd, objective = "equalized_odds")
   algorithm. *Science* 366:447. doi:10.1126/science.aax2342
 - Hardt M et al. (2016). Equality of Opportunity in Supervised
   Learning. *NeurIPS*.
-- FDA (2024). Artificial Intelligence and Machine Learning in
-  Software as a Medical Device Action Plan.
+- FDA (2021). Artificial Intelligence/Machine Learning (AI/ML)-Based
+  Software as a Medical Device (SaMD) Action Plan.
 
 ## License
 
