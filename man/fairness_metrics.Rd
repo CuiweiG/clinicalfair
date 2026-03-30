@@ -6,7 +6,10 @@
 \usage{
 fairness_metrics(
   data,
-  metrics = c("selection_rate", "tpr", "fpr", "ppv", "accuracy", "auc", "brier")
+  metrics = c("selection_rate", "tpr", "fpr", "ppv", "accuracy", "auc", "brier"),
+  ci = FALSE,
+  n_boot = 2000L,
+  ci_level = 0.95
 )
 }
 \arguments{
@@ -16,21 +19,36 @@ fairness_metrics(
 computes all available metrics. Options: \code{"selection_rate"},
 \code{"tpr"}, \code{"fpr"}, \code{"ppv"}, \code{"accuracy"},
 \code{"auc"}, \code{"brier"}.}
+
+\item{ci}{Logical; if \code{TRUE}, compute bootstrap confidence
+intervals for each metric. Default \code{FALSE}.}
+
+\item{n_boot}{Number of bootstrap replicates when \code{ci = TRUE}.
+Default 2000.}
+
+\item{ci_level}{Confidence level for the interval. Default 0.95.}
 }
 \value{
 A \code{fairness_metrics} object (tibble) with columns:
 \code{group}, \code{metric}, \code{value}, \code{ratio} (vs reference group),
-\code{difference} (vs reference group).
+\code{difference} (vs reference group). When \code{ci = TRUE}, additional
+columns \code{ci_lower} and \code{ci_upper} are included.
 }
 \description{
 Calculates a comprehensive set of group-wise and comparative
-fairness metrics from a \code{fairness_data} object.
+fairness metrics from a \code{fairness_data} object, with optional
+bootstrap confidence intervals.
 }
 \details{
 Fairness is assessed by comparing metric values across groups.
 A ratio of 1.0 or difference of 0.0 indicates perfect parity.
 Common thresholds: ratio in \eqn{[0.8, 1.25]} (four-fifths rule,
 EEOC guidelines) or difference < 0.05.
+
+When \code{ci = TRUE}, percentile bootstrap confidence intervals are
+computed by resampling within each group. This accounts for
+sampling variability and is recommended when reporting fairness
+metrics for regulatory or publication purposes.
 }
 \examples{
 set.seed(42)
@@ -40,6 +58,9 @@ fd <- fairness_data(
   protected_attr = rep(c("A", "B"), each = 100)
 )
 fairness_metrics(fd)
+
+# With bootstrap CIs
+fairness_metrics(fd, ci = TRUE, n_boot = 500)
 
 }
 \references{

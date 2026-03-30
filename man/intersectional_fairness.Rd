@@ -4,7 +4,13 @@
 \alias{intersectional_fairness}
 \title{Compute intersectional fairness metrics}
 \usage{
-intersectional_fairness(predictions, labels, ..., threshold = 0.5)
+intersectional_fairness(
+  predictions,
+  labels,
+  ...,
+  threshold = 0.5,
+  min_group_size = 10L
+)
 }
 \arguments{
 \item{predictions}{Numeric vector of predicted probabilities.}
@@ -15,9 +21,14 @@ intersectional_fairness(predictions, labels, ..., threshold = 0.5)
 Names become the attribute labels.}
 
 \item{threshold}{Decision threshold. Default 0.5.}
+
+\item{min_group_size}{Minimum number of observations required per
+intersectional group. Groups below this threshold are dropped
+with a warning. Default 10.}
 }
 \value{
 A \code{fairness_metrics} object with intersectional groups.
+Groups with fewer than \code{min_group_size} observations are excluded.
 }
 \description{
 Evaluates fairness across combinations of multiple protected

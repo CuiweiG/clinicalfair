@@ -7,16 +7,22 @@
 threshold_optimize(
   data,
   objective = c("equalized_odds", "demographic_parity"),
-  min_accuracy = 0.5
+  min_accuracy = 0.5,
+  grid_resolution = 0.01
 )
 }
 \arguments{
 \item{data}{A \link{fairness_data} object.}
 
 \item{objective}{\code{"equalized_odds"} (default): minimize TPR/FPR
-disparity. \code{"demographic_parity"}: equalize selection rates.}
+disparity across all groups. \code{"demographic_parity"}: equalize
+selection rates.}
 
 \item{min_accuracy}{Minimum acceptable overall accuracy. Default 0.5.}
+
+\item{grid_resolution}{Step size for the threshold grid search.
+Default 0.01 (99 candidate thresholds). Smaller values give
+finer-grained optimization at modest computational cost.}
 }
 \value{
 A \code{fairness_mitigation} object (list) with:
@@ -33,6 +39,12 @@ to a minimum accuracy constraint.
 This implements post-processing threshold adjustment, the simplest
 and most transparent mitigation strategy. Each group receives its
 own threshold to equalize the chosen fairness criterion.
+
+For \code{"equalized_odds"}, the algorithm computes a pooled target
+TPR and FPR across all groups at the original threshold, then
+optimizes every group (including the reference) to match the
+pooled target. This avoids the asymmetry of fixing the reference
+group threshold while only adjusting others.
 
 For clinical applications, group-specific thresholds are
 interpretable and auditable, unlike in-processing methods that
