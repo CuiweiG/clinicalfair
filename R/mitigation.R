@@ -6,8 +6,12 @@
 #'
 #' @param data A [fairness_data] object.
 #' @param objective `"equalized_odds"` (default): minimize TPR/FPR
-#'   disparity. `"demographic_parity"`: equalize selection rates.
+#'   disparity across all groups. `"demographic_parity"`: equalize
+#'   selection rates.
 #' @param min_accuracy Minimum acceptable overall accuracy. Default 0.5.
+#' @param grid_resolution Step size for the threshold grid search.
+#'   Default 0.01 (99 candidate thresholds). Smaller values give
+#'   finer-grained optimization at modest computational cost.
 #'
 #' @return A `fairness_mitigation` object (list) with:
 #'   `$thresholds` (named numeric, one per group),
@@ -18,6 +22,12 @@
 #' This implements post-processing threshold adjustment, the simplest
 #' and most transparent mitigation strategy. Each group receives its
 #' own threshold to equalize the chosen fairness criterion.
+#'
+#' For `"equalized_odds"`, the algorithm computes a pooled target
+#' TPR and FPR across all groups at the original threshold, then
+#' optimizes every group (including the reference) to match the
+#' pooled target. This avoids the asymmetry of fixing the reference
+#' group threshold while only adjusting others.
 #'
 #' For clinical applications, group-specific thresholds are
 #' interpretable and auditable, unlike in-processing methods that
@@ -38,10 +48,13 @@
 threshold_optimize <- function(data,
                                objective = c("equalized_odds",
                                              "demographic_parity"),
-                               min_accuracy = 0.5) {
+                               min_accuracy = 0.5,
+                               grid_resolution = 0.01) {
   if (!inherits(data, "fairness_data"))
     cli::cli_abort("{.arg data} must be a {.cls fairness_data} object.")
   objective <- match.arg(objective)
+  if (!is.numeric(grid_resolution) || grid_resolution <= 0 || grid_resolution >= 1)
+    cli::cli_abort("{.arg grid_resolution} must be between 0 and 1 (exclusive).")
 
   before <- fairness_metrics(data)
   acc_before <- mean(data$predicted_class == data$labels)
@@ -51,7 +64,7 @@ threshold_optimize <- function(data,
     rep(data$threshold, length(data$groups)), data$groups
   )
 
-  grid <- seq(0.05, 0.95, by = 0.05)
+  grid <- seq(grid_resolution, 1 - grid_resolution, by = grid_resolution)
 
   if (objective == "demographic_parity") {
     # Target: overall selection rate
@@ -70,23 +83,22 @@ threshold_optimize <- function(data,
       }
     }
   } else {
-    # equalized_odds: minimize max |TPR_g - TPR_ref| + |FPR_g - FPR_ref|
-    ref <- data$reference_group
-    ref_idx <- data$protected == ref
-    ref_pred <- data$predictions[ref_idx]
-    ref_lab <- data$labels[ref_idx]
-
-    # Find ref TPR/FPR at default threshold
-    ref_cls <- as.integer(ref_pred >= data$threshold)
-    ref_tp <- sum(ref_cls == 1 & ref_lab == 1)
-    ref_fn <- sum(ref_cls == 0 & ref_lab == 1)
-    ref_fp <- sum(ref_cls == 1 & ref_lab == 0)
-    ref_tn <- sum(ref_cls == 0 & ref_lab == 0)
-    target_tpr <- if (ref_tp + ref_fn > 0) ref_tp / (ref_tp + ref_fn) else 0.5
-    target_fpr <- if (ref_fp + ref_tn > 0) ref_fp / (ref_fp + ref_tn) else 0.5
+    # equalized_odds: compute pooled target TPR/FPR across ALL groups
+    # at the original threshold, then optimize every group to match
+    all_cls <- data$predicted_class
+    all_lab <- data$labels
+    total_tp <- sum(all_cls == 1 & all_lab == 1)
+    total_fn <- sum(all_cls == 0 & all_lab == 1)
+    total_fp <- sum(all_cls == 1 & all_lab == 0)
+    total_tn <- sum(all_cls == 0 & all_lab == 0)
+    target_tpr <- if (total_tp + total_fn > 0) {
+      total_tp / (total_tp + total_fn)
+    } else 0.5
+    target_fpr <- if (total_fp + total_tn > 0) {
+      total_fp / (total_fp + total_tn)
+    } else 0.5
 
     for (grp in data$groups) {
-      if (grp == ref) next
       idx <- data$protected == grp
       pred_grp <- data$predictions[idx]
       lab_grp <- data$labels[idx]

@@ -67,8 +67,12 @@ plot_calibration <- function(data, n_bins = 10L) {
 #' @param ... Two or more named vectors of protected attributes.
 #'   Names become the attribute labels.
 #' @param threshold Decision threshold. Default 0.5.
+#' @param min_group_size Minimum number of observations required per
+#'   intersectional group. Groups below this threshold are dropped
+#'   with a warning. Default 10.
 #'
 #' @return A `fairness_metrics` object with intersectional groups.
+#'   Groups with fewer than `min_group_size` observations are excluded.
 #'
 #' @references
 #' Buolamwini J, Gebru T (2018). Gender Shades: Intersectional
@@ -87,13 +91,37 @@ plot_calibration <- function(data, n_bins = 10L) {
 #'
 #' @export
 intersectional_fairness <- function(predictions, labels, ...,
-                                    threshold = 0.5) {
+                                    threshold = 0.5,
+                                    min_group_size = 10L) {
   attrs <- list(...)
   if (length(attrs) < 2)
     cli::cli_abort("Provide at least 2 protected attributes.")
 
   # Create intersectional group labels
   combined <- do.call(paste, c(attrs, sep = " x "))
+
+  # Check group sizes and filter small groups
+  group_counts <- table(combined)
+  small_groups <- names(group_counts[group_counts < min_group_size])
+
+  if (length(small_groups) > 0) {
+    keep <- !combined %in% small_groups
+    n_dropped <- sum(!keep)
+    cli::cli_warn(c(
+      "Dropping {length(small_groups)} group(s) with fewer than \\
+       {min_group_size} observations ({n_dropped} obs removed):",
+      "*" = "{.val {small_groups}}"
+    ))
+    predictions <- predictions[keep]
+    labels <- labels[keep]
+    combined <- combined[keep]
+  }
+
+  remaining_groups <- length(unique(combined))
+  if (remaining_groups < 2)
+    cli::cli_abort(paste0(
+      "After filtering small groups, only {remaining_groups} group(s) remain. ",
+      "Need at least 2. Lower {.arg min_group_size} or provide more data."))
 
   fd <- fairness_data(predictions, labels, combined,
                       threshold = threshold)

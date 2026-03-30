@@ -20,11 +20,14 @@ threshold-based mitigation -- motivated by regulatory expectations
 for transparency in clinical AI.
 
 - **Metrics**: demographic parity, equalized odds, predictive
-  parity, AUC, Brier score
+  parity, AUC, Brier score — with optional bootstrap confidence
+  intervals
 - **Visualization**: disparity plots, ROC by group, calibration
   by group
-- **Mitigation**: group-specific threshold optimization
-- **Intersectional**: cross-tabulated analysis (race x sex x age)
+- **Mitigation**: group-specific threshold optimization with
+  configurable grid resolution (default 0.01)
+- **Intersectional**: cross-tabulated analysis (race × sex × age)
+  with automatic small-group filtering
 - **Reporting**: four-fifths rule violation detection
 
 ---
@@ -52,7 +55,7 @@ Existing R packages approach fairness from different angles:
 |---------|-------|------------------------|
 | `fairmodels` | Model-level fairness (wraps mlr3) | clinicalfair is model-agnostic: works with any predicted probabilities |
 | `fairness` | Metric computation | clinicalfair adds threshold mitigation + intersectional analysis |
-| `fairmetrics` | CIs for fairness metrics | clinicalfair provides audit reports with four-fifths rule screening |
+| `fairmetrics` | CIs for fairness metrics | clinicalfair also provides bootstrap CIs, plus audit reports with four-fifths rule screening |
 
 `clinicalfair` is designed for the **clinical audit use case**:
 a clinician or regulator receives a trained model and needs to
@@ -92,6 +95,9 @@ fd <- fairness_data(
 # Compute metrics
 fairness_metrics(fd)
 
+# With bootstrap confidence intervals
+fairness_metrics(fd, ci = TRUE, n_boot = 2000)
+
 # Generate audit report
 fairness_report(fd)
 
@@ -119,10 +125,10 @@ threshold_optimize(fd, objective = "equalized_odds")
 | Function | Description |
 |----------|-------------|
 | `fairness_data()` | Bundle predictions, labels, protected attributes |
-| `fairness_metrics()` | Compute group-wise fairness metrics |
+| `fairness_metrics()` | Compute group-wise fairness metrics (optional bootstrap CIs) |
 | `fairness_report()` | Generate audit report with four-fifths rule screening |
-| `threshold_optimize()` | Group-specific threshold mitigation |
-| `intersectional_fairness()` | Cross-tabulated multi-attribute analysis |
+| `threshold_optimize()` | Group-specific threshold mitigation (configurable grid resolution) |
+| `intersectional_fairness()` | Cross-tabulated multi-attribute analysis (small-group filtering) |
 | `autoplot()` | Disparity bar plots (S3 method) |
 | `plot_roc()` | ROC curves by protected group |
 | `plot_calibration()` | Calibration curves by group |

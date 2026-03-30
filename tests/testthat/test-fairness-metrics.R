@@ -38,3 +38,29 @@ test_that("COMPAS dataset shows disparity", {
   expect_gt(sr_black, sr_white)
 })
 
+test_that("bootstrap CIs are computed when ci = TRUE", {
+  set.seed(42)
+  fd <- fairness_data(
+    predictions = c(runif(100, 0.2, 0.8), runif(100, 0.3, 0.9)),
+    labels = c(rbinom(100, 1, 0.3), rbinom(100, 1, 0.5)),
+    protected_attr = rep(c("A", "B"), each = 100)
+  )
+  fm <- fairness_metrics(fd, ci = TRUE, n_boot = 200)
+  expect_true("ci_lower" %in% names(fm))
+  expect_true("ci_upper" %in% names(fm))
+  # CIs should bracket the point estimate (for most rows)
+  expect_true(all(fm$ci_lower <= fm$ci_upper, na.rm = TRUE))
+  # Lower should be <= value <= upper for most metrics
+  within <- fm$ci_lower <= fm$value & fm$value <= fm$ci_upper
+  expect_true(mean(within, na.rm = TRUE) > 0.8)
+})
+
+test_that("ci = FALSE does not add CI columns", {
+  set.seed(1)
+  fd <- fairness_data(runif(100), rbinom(100, 1, 0.3),
+                      rep(c("A", "B"), 50))
+  fm <- fairness_metrics(fd, ci = FALSE)
+  expect_false("ci_lower" %in% names(fm))
+  expect_false("ci_upper" %in% names(fm))
+})
+
