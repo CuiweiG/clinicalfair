@@ -20,13 +20,13 @@ threshold-based mitigation -- motivated by regulatory expectations
 for transparency in clinical AI.
 
 - **Metrics**: demographic parity, equalized odds, predictive
-  parity, AUC, Brier score — with optional bootstrap confidence
+  parity, AUC, Brier score -- with optional bootstrap confidence
   intervals
 - **Visualization**: disparity plots, ROC by group, calibration
   by group
 - **Mitigation**: group-specific threshold optimization with
   configurable grid resolution (default 0.01)
-- **Intersectional**: cross-tabulated analysis (race × sex × age)
+- **Intersectional**: cross-tabulated analysis (race x sex x age)
   with automatic small-group filtering
 - **Reporting**: four-fifths rule violation detection
 
