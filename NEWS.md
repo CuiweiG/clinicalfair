@@ -1,4 +1,4 @@
-# clinicalfair 0.1.0
+# clinicalfair 0.1.1
 
 * Initial release.
 * `fairness_data()`: Bundle predictions, labels, protected attributes.
