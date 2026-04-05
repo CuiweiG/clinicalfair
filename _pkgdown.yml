@@ -1,0 +1,32 @@
+url: https://cuiweig.github.io/clinicalfair/
+template:
+  bootstrap: 5
+
+reference:
+  - title: "Data Preparation"
+    desc: "Functions for preparing fairness data objects."
+    contents:
+      - fairness_data
+
+  - title: "Fairness Metrics"
+    desc: "Compute and evaluate group-wise fairness metrics."
+    contents:
+      - fairness_metrics
+      - intersectional_fairness
+
+  - title: "Visualization"
+    desc: "Plot calibration curves, ROC curves, and fairness disparities."
+    contents:
+      - plot_calibration
+      - plot_roc
+      - autoplot
+
+  - title: "Mitigation"
+    desc: "Threshold-based fairness mitigation."
+    contents:
+      - threshold_optimize
+
+  - title: "Reporting"
+    desc: "Generate audit reports."
+    contents:
+      - fairness_report
