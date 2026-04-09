@@ -30,3 +30,7 @@ reference:
     desc: "Generate audit reports."
     contents:
       - fairness_report
+
+  - title: "Other"
+    contents:
+      - matches(".")
