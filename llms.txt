@@ -2,6 +2,10 @@
 
 *Algorithmic Fairness Assessment for Clinical Prediction Models*
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/clinicalfair)](https://CRAN.R-project.org/package=clinicalfair)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/clinicalfair)](https://CRAN.R-project.org/package=clinicalfair)
 [![R-CMD-check](https://github.com/CuiweiG/clinicalfair/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/CuiweiG/clinicalfair/actions/workflows/R-CMD-check.yml)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
