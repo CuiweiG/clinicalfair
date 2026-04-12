@@ -74,11 +74,11 @@ fairness_report(fairness_data(predictions, labels, race))
 ## Installation
 
 ```r
-# From GitHub:
-devtools::install_github("CuiweiG/clinicalfair")
-
-# After CRAN acceptance:
+# Stable release from CRAN
 install.packages("clinicalfair")
+
+# Development version from GitHub
+# devtools::install_github("CuiweiG/clinicalfair")
 ```
 
 ## Quick start
