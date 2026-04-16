@@ -17,7 +17,8 @@ Description: Post-hoc fairness auditing toolkit for clinical prediction
     <doi:10.1126/science.aax2342> and Hardt, Price, and Srebro (2016)
     <doi:10.48550/arXiv.1610.02413>.
 License: MIT + file LICENSE
-URL: https://github.com/CuiweiG/clinicalfair
+URL: https://github.com/CuiweiG/clinicalfair,
+    https://cuiweig.github.io/clinicalfair
 BugReports: https://github.com/CuiweiG/clinicalfair/issues
 Depends:
     R (>= 4.1.0)
