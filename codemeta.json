@@ -1,0 +1,31 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "clinicalfair",
+  "name": "clinicalfair",
+  "version": "0.1.1",
+  "description": "Post-hoc fairness auditing toolkit for clinical prediction models. Evaluates existing models by computing group-wise fairness metrics, visualizing disparities across protected attributes, and performing threshold-based mitigation.",
+  "license": "https://spdx.org/licenses/MIT",
+  "codeRepository": "https://github.com/CuiweiG/clinicalfair",
+  "issueTracker": "https://github.com/CuiweiG/clinicalfair/issues",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Cuiwei",
+      "familyName": "Gao",
+      "email": "48gaocuiwei@gmail.com"
+    }
+  ],
+  "keywords": [
+    "algorithmic-fairness",
+    "clinical-prediction",
+    "health-equity",
+    "FDA-AI-ML"
+  ],
+  "softwareRequirements": "R (>= 4.1.0)"
+}
