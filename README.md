@@ -11,6 +11,10 @@
 
 </div>
 
+<p align="center">
+<img src="man/figures/fairness_audit_hero.png" width="70%" alt="Bar chart of selection rate by race in the compas_sim dataset: Black 57 percent (reference), White 29 percent (ratio 0.51), with the White bar highlighted in red as a four-fifths rule violation." />
+</p>
+
 ---
 
 ## Overview
