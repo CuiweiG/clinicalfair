@@ -10,6 +10,11 @@ downloads](https://cranlogs.r-pkg.org/badges/grand-total/clinicalfair)](https://
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+![Bar chart of selection rate by race in the compas_sim dataset: Black
+57 percent (reference), White 29 percent (ratio 0.51), with the White
+bar highlighted in red as a four-fifths rule
+violation.](reference/figures/fairness_audit_hero.png)
+
 ------------------------------------------------------------------------
 
 ## Overview
