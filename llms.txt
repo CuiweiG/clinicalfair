@@ -10,12 +10,15 @@ downloads](https://cranlogs.r-pkg.org/badges/grand-total/clinicalfair)](https://
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-![Bar chart of selection rate by race in the compas_sim dataset: Black
-57 percent (reference), White 29 percent (ratio 0.51), with the White
-bar highlighted in red as a four-fifths rule
-violation.](reference/figures/fairness_audit_hero.png)
-
-------------------------------------------------------------------------
+![Two-panel fairness audit of the real ProPublica COMPAS dataset
+(N=5,787) with three race groups (African-American, Caucasian,
+Hispanic). Left panel: selection rate by group with 95% bootstrap
+confidence intervals and the four-fifths threshold line; both Caucasian
+and Hispanic groups fall below the threshold relative to
+African-American as the highest-N reference. Right panel: true-positive
+and false-positive rates by group at decile_score \>= 5, showing
+systematic disparity in both directions.” /\> \</p\> \<hr /\> \<div
+id=](reference/figures/fairness_audit_hero.png)
 
 ## Overview
 
