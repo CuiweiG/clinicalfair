@@ -86,26 +86,32 @@ fm$metric <- factor(
 cat("\n=== Fairness metrics (fm) ===\n")
 print(fm)
 
-# ---- Four-fifths flags on selection rate -----------------------------------
+# ---- Four-fifths thresholds under BOTH reference choices ------------------
+# The ratio used for the four-fifths rule depends on who counts as the
+# reference group. ProPublica's 2016 analysis treated high-selection-rate
+# groups as bearing the disparate-impact harm (being flagged at higher
+# rates). To avoid hiding that choice, we show both thresholds on Panel A:
+# (i)  0.8 x AA selection rate — lower bound if AA is the reference;
+# (ii) 1.25 x Caucasian selection rate — upper bound if Caucasian is the
+#      reference. A rate outside both bounds is flagged under either
+#      reference.
 
 sel <- fm |> filter(metric == "Selection rate")
-ref_sel <- sel$value[sel$group == ref_group]
-ff_low  <- 0.8  * ref_sel
-ff_high <- 1.25 * ref_sel
+aa_rate    <- sel$value[sel$group == "African-American"]
+cauc_rate  <- sel$value[sel$group == "Caucasian"]
+ff_low_AA   <- 0.8  * aa_rate
+ff_high_Cauc <- 1.25 * cauc_rate
 
 sel <- sel |>
   mutate(
     status = case_when(
-      group == ref_group                ~ "Reference",
-      value < ff_low | value > ff_high  ~ "Four-fifths violation",
-      TRUE                              ~ "Within 0.8x-1.25x"
+      group == "African-American"                        ~ "Reference (AA)",
+      value < ff_low_AA & value < ff_high_Cauc           ~ "Violation (both refs)",
+      value < ff_low_AA | value > ff_high_Cauc           ~ "Violation (one ref)",
+      TRUE                                               ~ "Within 0.8x-1.25x (both refs)"
     )
   ) |>
-  left_join(
-    group_counts |> rename(group = race, N = n),
-    by = "group"
-  )
-# Only build legend entries for statuses actually present in the data
+  left_join(group_counts |> rename(group = race, N = n), by = "group")
 status_levels <- unique(sel$status)
 sel$status <- factor(sel$status, levels = status_levels)
 
@@ -120,19 +126,26 @@ pA <- ggplot(sel, aes(x = reorder(group, value),
   geom_col(width = 0.6, colour = "grey25", linewidth = 0.3) +
   geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper),
                 width = 0.2, colour = "grey15") +
-  geom_hline(yintercept = ff_low,
-             linetype = "dashed", colour = "grey40", linewidth = 0.5) +
-  annotate("text", x = 0.55, y = ff_low,
-           label = sprintf("Four-fifths threshold (%.3f)", ff_low),
-           hjust = 0, vjust = -0.5, size = 3.1, colour = "grey25") +
+  # Two threshold lines — one per reference-group choice.
+  geom_hline(yintercept = ff_low_AA,
+             linetype = "dashed", colour = "#C62828", linewidth = 0.5) +
+  geom_hline(yintercept = ff_high_Cauc,
+             linetype = "dotted", colour = "#1565C0", linewidth = 0.5) +
+  annotate("text", x = 0.55, y = ff_low_AA,
+           label = sprintf("0.8 x AA = %.2f", ff_low_AA),
+           hjust = -0.05, vjust = -0.5, size = 2.9, colour = "#C62828") +
+  annotate("text", x = 0.55, y = ff_high_Cauc,
+           label = sprintf("1.25 x Cauc = %.2f", ff_high_Cauc),
+           hjust = 1.05, vjust = -0.5, size = 2.9, colour = "#1565C0") +
   geom_text(aes(label = sprintf("N = %s", format(N, big.mark = ","))),
-            y = 0.025, hjust = 0, size = 3.3,
+            y = 1, hjust = 1.05, size = 3.3,
             fontface = "italic", colour = "grey20") +
   scale_fill_manual(
     values = c(
-      "Reference"             = "#455A64",
-      "Within 0.8x-1.25x"     = "#2E7D32",
-      "Four-fifths violation" = "#C62828"
+      "Reference (AA)"                 = "#455A64",
+      "Within 0.8x-1.25x (both refs)"  = "#2E7D32",
+      "Violation (one ref)"            = "#F57F17",
+      "Violation (both refs)"          = "#C62828"
     ),
     name = NULL
   ) +
@@ -143,8 +156,8 @@ pA <- ggplot(sel, aes(x = reorder(group, value),
   ) +
   coord_flip() +
   labs(
-    title    = "Selection rate by race group",
-    subtitle = "Error bars: 95% bootstrap CI (500 reps)",
+    title    = "Selection rate by race group (two reference views)",
+    subtitle = "Bars: rate with 95% bootstrap CI (500 reps); dashed/dotted: FF thresholds",
     x = NULL,
     y = "Selection rate (decile_score >= 5)"
   ) +
@@ -161,9 +174,15 @@ pA <- ggplot(sel, aes(x = reorder(group, value),
     axis.text.y        = element_text(face = "bold")
   )
 
-# ---- Panel B: TPR + FPR by group ------------------------------------------
+# ---- Panel B: TPR + FPR by group (full labels) ----------------------------
 
-err <- fm |> filter(metric %in% c("TPR", "FPR"))
+err <- fm |>
+  filter(metric %in% c("TPR", "FPR")) |>
+  mutate(metric = factor(
+    as.character(metric),
+    levels = c("TPR", "FPR"),
+    labels = c("True positive rate (TPR)", "False positive rate (FPR)")
+  ))
 
 pB <- ggplot(err, aes(x = group, y = value, fill = metric)) +
   geom_col(position = position_dodge(width = 0.75), width = 0.65,
@@ -173,14 +192,17 @@ pB <- ggplot(err, aes(x = group, y = value, fill = metric)) +
     position = position_dodge(width = 0.75),
     width = 0.18, colour = "grey15"
   ) +
-  scale_fill_manual(values = c("TPR" = "#1565C0", "FPR" = "#E65100"),
-                    name = NULL) +
+  scale_fill_manual(
+    values = c("True positive rate (TPR)" = "#1565C0",
+               "False positive rate (FPR)" = "#E65100"),
+    name = NULL
+  ) +
   scale_y_continuous(
     labels = scales::percent_format(accuracy = 1),
     limits = c(0, 1), expand = c(0, 0)
   ) +
   labs(
-    title    = "TPR / FPR by race group",
+    title    = "True and false positive rates by group",
     subtitle = "Error bars: 95% bootstrap CI (500 reps)",
     x = NULL,
     y = "Rate"
@@ -192,6 +214,9 @@ pB <- ggplot(err, aes(x = group, y = value, fill = metric)) +
     plot.title         = element_text(face = "bold", size = 13),
     plot.subtitle      = element_text(colour = "grey30", size = 10),
     legend.position    = "bottom",
+    legend.direction   = "vertical",
+    legend.key.size    = unit(0.4, "cm"),
+    legend.text        = element_text(size = 9),
     axis.text.x        = element_text(size = 10)
   )
 
@@ -204,12 +229,17 @@ combined <- (pA + pB) +
       "Fairness audit of ProPublica COMPAS data (N = %s)",
       format(N_total, big.mark = ",")
     ),
-    subtitle = "Three-group selection rate and error disparity analysis",
+    subtitle = paste0(
+      "AA N=3,175; Caucasian N=2,103; Hispanic N=509.  ",
+      "500 bootstrap replicates (seed=42).  No multiple-comparison correction."
+    ),
     caption  = paste0(
       "Data: ProPublica compas-scores-two-years (2016 investigation, public).  ",
       "Filtered per Larson et al. (2016).  Cutoff: decile_score >= 5.\n",
-      "95% bootstrap CIs (500 replicates).  Reference group: ",
-      ref_group, " (highest N).  Method: clinicalfair::fairness_metrics()."
+      "Ratio direction depends on reference-group choice.  ProPublica (2016) ",
+      "identified African-Americans as disproportionately high-risk flagged;\n",
+      "Panel A shows thresholds under both AA-as-reference and Cauc-as-reference.  ",
+      "Method: clinicalfair::fairness_metrics()."
     ),
     theme = theme(
       plot.title            = element_text(face = "bold", size = 15),
