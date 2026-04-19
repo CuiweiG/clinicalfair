@@ -70,7 +70,11 @@ fd <- fairness_data(
 )
 
 # ---- Metric computation with bootstrap CIs ---------------------------------
+# Pin the seed so the 500-replicate bootstrap CIs are deterministic across
+# pkgdown CI rebuilds; point estimates are unaffected, CI endpoints match
+# bit-for-bit between runs.
 
+set.seed(42L)
 fm <- fairness_metrics(
   fd,
   metrics = c("selection_rate", "tpr", "fpr"),
