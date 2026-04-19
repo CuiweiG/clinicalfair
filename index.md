@@ -10,19 +10,16 @@ downloads](https://cranlogs.r-pkg.org/badges/grand-total/clinicalfair)](https://
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-![Two-panel fairness audit of the real ProPublica COMPAS dataset
-(N=5,787) across three race groups (African-American N=3,175; Caucasian
-N=2,103; Hispanic N=509). Left panel: selection rate by group with 95%
-bootstrap confidence intervals (500 replicates) and both four-fifths
-thresholds shown simultaneously — 0.8 x African-American rate (red
-dashed) and 1.25 x Caucasian rate (blue dotted) — so the ratio direction
-is not hidden. Both Caucasian and Hispanic bars fall outside the union
-of thresholds under both reference choices. Right panel: true positive
-rate and false positive rate by group at decile_score \>= 5 decision
-cutoff, showing systematic disparity (AA TPR 71.5%, Caucasian 50.4%,
-Hispanic 41.8%; FPR 42.3 / 22.0 / 19.4%). Caption cites ProPublica
-(2016) direction and notes no multiple-comparison correction.” /\>
-\</p\> \<hr /\> \<div id=](reference/figures/fairness_audit_hero.png)
+![Two-panel publication-standard algorithmic fairness audit of the
+ProPublica COMPAS dataset (N=5,787, three racial groups). Panel a:
+selection rate by group with 95 percent bootstrap confidence intervals
+(500 replicates, seed=42) and four-fifths thresholds under both
+African-American (highest-N) and Caucasian (historical reference)
+framings, drawn with Okabe-Ito colorblind-safe palette. Panel b: true
+and false positive rates by group at decile_score \>= 5. Rendered at 600
+DPI via ragg; PDF vector version at
+man/figures/fairness_audit_hero.pdf.” /\> \</p\> \<hr /\> \<div
+id=](reference/figures/fairness_audit_hero.png)
 
 ## Overview
 
