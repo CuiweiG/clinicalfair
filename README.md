@@ -5,8 +5,10 @@
 *Algorithmic Fairness Assessment for Clinical Prediction Models*
 
 [![CRAN status](https://www.r-pkg.org/badges/version/clinicalfair)](https://CRAN.R-project.org/package=clinicalfair)
+[![CRAN checks](https://badges.cranchecks.info/worst/clinicalfair.svg)](https://cran.r-project.org/web/checks/check_results_clinicalfair.html)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/clinicalfair)](https://CRAN.R-project.org/package=clinicalfair)
 [![R-CMD-check](https://github.com/CuiweiG/clinicalfair/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/CuiweiG/clinicalfair/actions/workflows/R-CMD-check.yml)
+[![DOI](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.clinicalfair-blue.svg)](https://doi.org/10.32614/CRAN.package.clinicalfair)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 </div>
