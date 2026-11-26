@@ -13,3 +13,4 @@
 ^codemeta\.json$
 ^codecov\.yml$
 ^inst/notes$
+^\.mailmap$
