@@ -9,6 +9,7 @@ expectations for transparency in clinical AI evaluation.
 ## Example: COMPAS recidivism prediction
 
 ``` r
+
 library(clinicalfair)
 data(compas_sim)
 str(compas_sim)
@@ -21,6 +22,7 @@ str(compas_sim)
 ## Create fairness data
 
 ``` r
+
 fd <- fairness_data(
   predictions    = compas_sim$risk_score,
   labels         = compas_sim$recidivism,
@@ -37,6 +39,7 @@ fd
 ## Compute fairness metrics
 
 ``` r
+
 fm <- fairness_metrics(fd)
 fm
 #> 
@@ -63,6 +66,7 @@ fm
 ## Generate fairness report
 
 ``` r
+
 rpt <- fairness_report(fd)
 rpt
 #> 
@@ -81,6 +85,7 @@ rpt
 ## Visualize disparities
 
 ``` r
+
 autoplot(fm)
 ```
 
@@ -89,6 +94,7 @@ autoplot(fm)
 ## Group-wise calibration
 
 ``` r
+
 plot_calibration(fd)
 ```
 
@@ -97,6 +103,7 @@ plot_calibration(fd)
 ## Threshold optimization
 
 ``` r
+
 mit <- threshold_optimize(fd, objective = "equalized_odds")
 mit
 #> 
@@ -110,6 +117,7 @@ mit
 ## Intersectional analysis
 
 ``` r
+
 set.seed(42)
 n <- nrow(compas_sim)
 intersectional_fairness(

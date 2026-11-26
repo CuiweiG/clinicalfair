@@ -5,8 +5,11 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/clinicalfair)](https://CRAN.R-project.org/package=clinicalfair)
 [![CRAN
+checks](https://badges.cranchecks.info/worst/clinicalfair.svg)](https://cran.r-project.org/web/checks/check_results_clinicalfair.html)
+[![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/clinicalfair)](https://CRAN.R-project.org/package=clinicalfair)
 [![R-CMD-check](https://github.com/CuiweiG/clinicalfair/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/CuiweiG/clinicalfair/actions/workflows/R-CMD-check.yml)
+[![DOI](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.clinicalfair-blue.svg)](https://doi.org/10.32614/CRAN.package.clinicalfair)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -56,11 +59,11 @@ transparency in clinical AI.
 
 Existing R packages approach fairness from different angles:
 
-| Package       | Focus                             | clinicalfair difference                                                                      |
-|---------------|-----------------------------------|----------------------------------------------------------------------------------------------|
-| `fairmodels`  | Model-level fairness (wraps mlr3) | clinicalfair is model-agnostic: works with any predicted probabilities                       |
-| `fairness`    | Metric computation                | clinicalfair adds threshold mitigation + intersectional analysis                             |
-| `fairmetrics` | CIs for fairness metrics          | clinicalfair also provides bootstrap CIs, plus audit reports with four-fifths rule screening |
+| Package | Focus | clinicalfair difference |
+|----|----|----|
+| `fairmodels` | Model-level fairness (wraps mlr3) | clinicalfair is model-agnostic: works with any predicted probabilities |
+| `fairness` | Metric computation | clinicalfair adds threshold mitigation + intersectional analysis |
+| `fairmetrics` | CIs for fairness metrics | clinicalfair also provides bootstrap CIs, plus audit reports with four-fifths rule screening |
 
 `clinicalfair` is designed for the **clinical audit use case**: a
 clinician or regulator receives a trained model and needs to answer “is
@@ -68,6 +71,7 @@ this model fair across patient subgroups?” in one function call, with
 actionable output.
 
 ``` r
+
 # One-line audit
 fairness_report(fairness_data(predictions, labels, race))
 ```
@@ -77,6 +81,7 @@ fairness_report(fairness_data(predictions, labels, race))
 ## Installation
 
 ``` r
+
 # Stable release from CRAN
 install.packages("clinicalfair")
 
@@ -87,6 +92,7 @@ install.packages("clinicalfair")
 ## Quick start
 
 ``` r
+
 library(clinicalfair)
 data(compas_sim)
 
@@ -124,16 +130,16 @@ threshold_optimize(fd, objective = "equalized_odds")
 
 ## Functions
 
-| Function                                                                                                   | Description                                                        |
-|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [`fairness_data()`](https://cuiweig.github.io/clinicalfair/reference/fairness_data.md)                     | Bundle predictions, labels, protected attributes                   |
-| [`fairness_metrics()`](https://cuiweig.github.io/clinicalfair/reference/fairness_metrics.md)               | Compute group-wise fairness metrics (optional bootstrap CIs)       |
-| [`fairness_report()`](https://cuiweig.github.io/clinicalfair/reference/fairness_report.md)                 | Generate audit report with four-fifths rule screening              |
-| [`threshold_optimize()`](https://cuiweig.github.io/clinicalfair/reference/threshold_optimize.md)           | Group-specific threshold mitigation (configurable grid resolution) |
-| [`intersectional_fairness()`](https://cuiweig.github.io/clinicalfair/reference/intersectional_fairness.md) | Cross-tabulated multi-attribute analysis (small-group filtering)   |
-| [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)                                      | Disparity bar plots (S3 method)                                    |
-| [`plot_roc()`](https://cuiweig.github.io/clinicalfair/reference/plot_roc.md)                               | ROC curves by protected group                                      |
-| [`plot_calibration()`](https://cuiweig.github.io/clinicalfair/reference/plot_calibration.md)               | Calibration curves by group                                        |
+| Function | Description |
+|----|----|
+| [`fairness_data()`](https://cuiweig.github.io/clinicalfair/reference/fairness_data.md) | Bundle predictions, labels, protected attributes |
+| [`fairness_metrics()`](https://cuiweig.github.io/clinicalfair/reference/fairness_metrics.md) | Compute group-wise fairness metrics (optional bootstrap CIs) |
+| [`fairness_report()`](https://cuiweig.github.io/clinicalfair/reference/fairness_report.md) | Generate audit report with four-fifths rule screening |
+| [`threshold_optimize()`](https://cuiweig.github.io/clinicalfair/reference/threshold_optimize.md) | Group-specific threshold mitigation (configurable grid resolution) |
+| [`intersectional_fairness()`](https://cuiweig.github.io/clinicalfair/reference/intersectional_fairness.md) | Cross-tabulated multi-attribute analysis (small-group filtering) |
+| [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html) | Disparity bar plots (S3 method) |
+| [`plot_roc()`](https://cuiweig.github.io/clinicalfair/reference/plot_roc.md) | ROC curves by protected group |
+| [`plot_calibration()`](https://cuiweig.github.io/clinicalfair/reference/plot_calibration.md) | Calibration curves by group |
 
 ------------------------------------------------------------------------
 
