@@ -14,12 +14,13 @@ disparity plots, and provides threshold-based mitigation strategies.
 Useful links:
 \itemize{
   \item \url{https://github.com/CuiweiG/clinicalfair}
+  \item \url{https://cuiweig.github.io/clinicalfair/}
   \item Report bugs at \url{https://github.com/CuiweiG/clinicalfair/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Cuiwei Gao \email{48gaocuiwei@gmail.com} [copyright holder]
+\strong{Maintainer}: Cuiwei Gao \email{48gaocuiwei@gmail.com} (\href{https://orcid.org/0009-0002-4896-0601}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}

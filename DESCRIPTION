@@ -2,8 +2,9 @@ Package: clinicalfair
 Title: Algorithmic Fairness Assessment for Clinical Prediction Models
 Version: 0.1.1
 Authors@R:
-    person("Cuiwei", "Gao", , "48gaocuiwei@gmail.com",
-    role = c("aut", "cre", "cph"))
+    person("Cuiwei", "Gao", email = "48gaocuiwei@gmail.com",
+           role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0009-0002-4896-0601"))
 Description: Post-hoc fairness auditing toolkit for clinical prediction
     models. Unlike in-processing approaches that modify model training,
     this package evaluates existing models by computing group-wise
@@ -18,7 +19,7 @@ Description: Post-hoc fairness auditing toolkit for clinical prediction
     <doi:10.48550/arXiv.1610.02413>.
 License: MIT + file LICENSE
 URL: https://github.com/CuiweiG/clinicalfair,
-    https://cuiweig.github.io/clinicalfair
+    https://cuiweig.github.io/clinicalfair/
 BugReports: https://github.com/CuiweiG/clinicalfair/issues
 Depends:
     R (>= 4.1.0)
